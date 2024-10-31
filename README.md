@@ -1,4 +1,4 @@
-Rapport de Projet : Mise en Place d'une Infrastructure Multi-Conteneurs avec Docker et NGINX
+**Rapport de Projet : Mise en Place d'une Infrastructure Multi-Conteneurs avec Docker et NGINX**
 1. Introduction
 Ce projet a pour objectif de créer une infrastructure web à l'aide de Docker, qui consiste en un serveur NGINX, un superviseur des connexions, et un client capable d'envoyer des requêtes HTTP au serveur. L'ensemble des fichiers nécessaires a été conservé dans un dépôt Git pour évaluation.
 
