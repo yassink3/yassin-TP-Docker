@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  nginx-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nginx_server
+    ports:
+      - "7000:80"  # Expose NGINX sur le port 7000 de l'hôte
+    volumes:
+      - nginx-log:/var/log/nginx  # Partage le volume de logs NGINX
+    networks:
+      - webnet
+
+  supervisor:
+    image: ubuntu:20.04
+    container_name: nginx_supervisor
+    volumes:
+      - ./nginx-supervisor.sh:/servlog/nginx-supervisor.sh  # Monte le script dans le conteneur
+      - nginx-log:/servlog  # Partage le volume pour superviser les logs
+    networks:
+      - webnet
+    command: ["/bin/bash", "/servlog/nginx-supervisor.sh"]
+
+  curl-client:
+    image: radial/busyboxplus:curl
+    container_name: nginx_curl_client
+    networks:
+      - webnet
+    command: ["curl", "http://nginx-server:80"]  # Requête vers le serveur NGINX
+
+volumes:
+  nginx-log:  # Déclare le volume partagé pour les logs
+
+networks:
+  webnet:
+    driver: bridge  # Crée un réseau de type bridge
+
